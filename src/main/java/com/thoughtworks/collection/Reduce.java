@@ -2,7 +2,9 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Reduce {
 
@@ -13,43 +15,51 @@ public class Reduce {
     }
 
     public int getMaximum() {
-        throw new NotImplementedException();
+        return arrayList.stream().mapToInt((x) ->x).summaryStatistics().getMax();
     }
 
     public double getMinimum() {
-        throw new NotImplementedException();
+        return arrayList.stream().mapToInt((x) ->x).summaryStatistics().getMin();
     }
 
     public double getAverage() {
-        throw new NotImplementedException();
+        return arrayList.stream().mapToInt((x) ->x).summaryStatistics().getAverage();
     }
 
     public double getOrderedMedian() {
-        throw new NotImplementedException();
+        int n = arrayList.size();
+        return n % 2 == 0 ? (double) (arrayList.get(n / 2) + arrayList.get(n / 2 - 1))/2 : arrayList.get(n / 2);
     }
 
     public int getFirstEven() {
-        throw new NotImplementedException();
+        return arrayList.stream().filter(i -> i % 2 == 0).findFirst().get();
     }
 
     public int getIndexOfFirstEven() {
-        throw new NotImplementedException();
+        return arrayList.indexOf(arrayList.stream().filter(i -> i % 2 == 0).findFirst().get());
     }
 
     public boolean isEqual(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        return arrayList.containsAll(this.arrayList);
     }
 
     //实现接口SingleLink，然后再此函数内使用
     public Double getMedianInLinkList(SingleLink singleLink) {
-        throw new NotImplementedException();
+        for (Integer i:arrayList){
+            singleLink.addTailPointer(i);
+        }
+        int n = arrayList.size();
+        return n % 2 == 0 ? (double) (arrayList.get(n / 2) + arrayList.get(n / 2 - 1))/2 : (double)arrayList.get(n / 2);
     }
 
     public int getLastOdd() {
-        throw new NotImplementedException();
+        List<Integer> temp = arrayList.stream().filter(i -> i % 2 != 0).collect(Collectors.toList());
+        return temp.get(temp.size()-1);
     }
 
     public int getIndexOfLastOdd() {
-        throw new NotImplementedException();
+        List<Integer> temp = arrayList.stream().filter(i -> i % 2 != 0).collect(Collectors.toList());
+        return arrayList.indexOf(temp.get(temp.size()-1));
     }
 }
+

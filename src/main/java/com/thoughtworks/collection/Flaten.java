@@ -2,7 +2,11 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Flaten {
 
@@ -12,10 +16,20 @@ public class Flaten {
     }
 
     public List<Integer> transformToOneDimesional() {
-        throw new NotImplementedException();
+        List<Integer> resultList = new ArrayList<Integer>();
+        List <Integer[]> temp = Arrays.stream(array).collect(Collectors.toList());
+        for (Integer[] i :temp){
+            resultList.addAll(Arrays.stream(i).collect(Collectors.toList()));
+        }
+        return resultList;
     }
 
     public List<Integer> transformToUnrepeatedOneDimesional() {
-        throw new NotImplementedException();
+        List<Integer> resultList = new ArrayList<Integer>();
+        List <Integer[]> temp = Arrays.stream(array).collect(Collectors.toList());
+        for (Integer[] i :temp){
+            resultList.addAll(Arrays.stream(i).collect(Collectors.toList()));
+        }
+        return resultList.stream().distinct().collect(Collectors.toList());
     }
 }
